@@ -13,26 +13,39 @@
     <string name="pref_display_mode_absolute_key">absolute</string>
     <string name="pref_display_mode_percentage_key">percentage</string>
 
-    <string name="default_stocks_yahoo">YHOO</string>
-    <string name="default_stocks_apple">AAPL</string>
-    <string name="default_stocks_microsoft">MSFT</string>
-    <string name="default_stocks_facebook">FB</string>
-    <string name="fab_button_content_description">Plus Button. Click to Add Stock</string>
+    <string name="default_stocks_yahoo" translatable="false">YHOO</string>
+    <string name="default_stocks_apple" translatable="false">AAPL</string>
+    <string name="default_stocks_microsoft" translatable="false">MSFT</string>
+    <string name="default_stocks_facebook" translatable="false">FB</string>
+    <string name="fab_button_content_description" translatable="true">Plus Button. Click to Add Stock</string>
     <string name="action_change_units_description">Change Units</string>
-    <string name="action_change_units">@string/pref_display_mode_key</string>
+    <string name="action_change_units">pref_display_mode_key</string>
 
 
     <string name="dialog_title" translatable="true">Add Stock</string>
     <string name="dialog_hint" translatable="true">Symbol (e.g. GOOG)</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_add">Add</string>
-
+    <string name="invalid_stock" translatable="true">Invalid symbol entered. No such stock present.</string>
     <string name="error_no_network" translatable="true">No network connectivity! Will load stock cursor when the network is available.</string>
     <string name="error_no_stocks" translatable="true">No stocks added! Hit the floating action button to add one.</string>
 
     <string name="toast_stock_added_no_connectivity" translatable="true">Symbol %s added. Will refresh when network available.</string>
     <string name="toast_no_connectivity" translatable="true">Will refresh when network available.</string>
     <string name="toast_no_connectivity_on_create" translatable="true">No Network Available. Connect to get updated data.</string>
-    <string name="title_activity_on_click">OnClickActivity</string>
+    <string name="title_activity_on_click" translatable="true">Stock Detail</string>
+    <string name="no_network_on_click" translatable="true">Network is not available.Outdated data is being shown.</string>
+    <string name="graph_legend" translatable="true">Stock</string>
+    <string name="graph_desc" translatable="true">Last 12 Months Stock Comparison</string>
+
+    <string name="on_click_name">NAME</string>
+    <string name="marketcap">MARKET CAP</string>
+    <string name="dayLow">DAY\'S LOW</string>
+    <string name="dayHigh">DAY\'S HIGH</string>
+    <string name="yearLow">YEAR\'S LOW</string>
+    <string name="yearHigh">YEAR\'S HIGH</string>
+    <string name="quarterlyEstimate">QUARTERLY ESTIMATE</string>
+    <string name="yearlyEstimate">NEXT YEAR ESTIMATE</string>
+    <string name="yield">DIVIDENT</string>
 
 </resources>

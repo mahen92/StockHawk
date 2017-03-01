@@ -9,13 +9,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
-
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,13 +22,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import timber.log.Timber;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
-import yahoofinance.quotes.stock.StockDividend;
 import yahoofinance.quotes.stock.StockQuote;
 import yahoofinance.quotes.stock.StockStats;
 
@@ -60,20 +55,12 @@ public final class QuoteSyncJob {
         from.add(Calendar.YEAR, -YEARS_OF_HISTORY);
 
         try {
-            HashSet<String> cursorList = new HashSet<>();
             Set<String> stockPref = PrefUtils.getStocks(context);
-            String[] stockArray = stockPref.toArray(new String[stockPref.size()]);
-            for(String j:stockPref)
-            {
-                Log.v("Plush",j);
-            }
             Set<String> stockCopy = new HashSet<>();
             if(cursor!=null) {
                 if(cursor.getCount()!=0) {
                     for (int i = 0; i <= cursor.getCount() - 1; i++) {
-
                         cursor.moveToPosition(i);
-                        Log.v("CursorCount", cursor.getString(Contract.Quote.POSITION_SYMBOL));
                         stockPref.add(cursor.getString(Contract.Quote.POSITION_SYMBOL));
                     }
                 }
@@ -86,12 +73,9 @@ public final class QuoteSyncJob {
             }
             for(String sym:arrList)
             {
-                Log.v("TestStockk","comes"+sym);
                 Stock testStock=YahooFinance.get(sym);
-
                 if(testStock.getName()==null)
                 {
-                    Log.v("TestStock","nullpoint");
                     stockPref.remove(sym);
                     Intent intent = new Intent();
                     intent.setAction("com.udacity.stockhawk.ui.MainActivity.STOCK_NOT_FOUND");
@@ -99,49 +83,33 @@ public final class QuoteSyncJob {
                 }
             }
             stockCopy.addAll(stockPref);
-            stockArray = stockPref.toArray(new String[stockPref.size()]);
-
+            String[] stockArray = stockPref.toArray(new String[stockPref.size()]);
             Timber.d(stockCopy.toString());
-
             if (stockArray.length == 0) {
                 return;
             }
-
             Map<String, Stock> quotes = YahooFinance.get(stockArray,true);
             Iterator<String> iterator = stockCopy.iterator();
-
             Timber.d(quotes.toString());
 
             ArrayList<ContentValues> quoteCVs = new ArrayList<>();
-            /*while (iterator.hasNext()) {
-                String symbol = iterator.next();
 
-                Log.v("Legilimens3", symbol);
-                //Log.v("Legilimens1",""+quotes.containsKey(symbol));
-                Stock stock = quotes.get(symbol);
-                if(stock.getName()==null)
-                {
-                    Intent intent = new Intent();
-                    intent.setAction("com.udacity.stockhawk.ui.MainActivity.STOCK_NOT_FOUND");
-                    context.sendBroadcast(intent);
-                    quotes.remove(symbol);
-                    // Toast.makeText(context, "Invalid Symbol",Toast.LENGTH_SHORT).show();
-
-                }
-            }*/
 
             while (iterator.hasNext()) {
                 String symbol = iterator.next();
-
-                Log.v("Legilimens0",symbol);
-                //Log.v("Legilimens1",""+quotes.containsKey(symbol));
                 Stock stock = quotes.get(symbol);
-
-
-                Log.v("Legilimens",stock.getName());
                 StockQuote quote = stock.getQuote();
                 StockStats stat = stock.getStats();
-                StockDividend div=stock.getDividend();
+
+
+                String name = stock.getName();
+                BigDecimal marketcap=stat.getMarketCap();
+                BigDecimal dayLow=quote.getDayLow();
+                BigDecimal dayHigh=quote.getDayHigh();
+                BigDecimal yearLow=quote.getYearLow();
+                BigDecimal yearHigh=quote.getYearHigh();
+                BigDecimal quarterlyEstimate=stat.getEpsEstimateNextQuarter();
+                BigDecimal yearlyEstimate=stat.getEpsEstimateNextYear();
 
                 float price = quote.getPrice().floatValue();
                 float change = quote.getChange().floatValue();
@@ -155,33 +123,15 @@ public final class QuoteSyncJob {
                 StringBuilder historyBuilder = new StringBuilder();
 
                 for (HistoricalQuote it : history){
-                    ;
 
-                    //historyBuilder.append(it.getDate().getTimeInMillis());
                     historyBuilder.append(it.getClose());
                     historyBuilder.append("%");
-                    //historyBuilder.append(it.getDate());
-                    //historyBuilder.append(", ");
-                   /* historyBuilder.append(it.getOpen());
-                    historyBuilder.append(", ");
-                    historyBuilder.append(it.getLow());
-                    historyBuilder.append(", ");
-                    historyBuilder.append(it.getHigh());
-                    historyBuilder.append(", ");
-                    historyBuilder.append(it.getClose());
-                    historyBuilder.append(", ");
-                    historyBuilder.append(it.getAdjClose());
-                    historyBuilder.append(", ");
-                    historyBuilder.append(it.getVolume());*/
-
                 }
                 historyBuilder.append(",");
                 for (HistoricalQuote it : history){
 
 
                     Date date=it.getDate().getTime();
-                    Log.v("Mitch",""+it.getSymbol());
-                    Log.v("Mitch",""+date);
                     SimpleDateFormat newFormat = new SimpleDateFormat("MM-dd-yy");
                     String finalString = newFormat.format(date);
                     historyBuilder.append(finalString);
@@ -193,14 +143,17 @@ public final class QuoteSyncJob {
                 quoteCV.put(Contract.Quote.COLUMN_PRICE, price);
                 quoteCV.put(Contract.Quote.COLUMN_PERCENTAGE_CHANGE, percentChange);
                 quoteCV.put(Contract.Quote.COLUMN_ABSOLUTE_CHANGE, change);
-
-
                 quoteCV.put(Contract.Quote.COLUMN_HISTORY, historyBuilder.toString());
-
+                quoteCV.put(Contract.Quote.COLUMN_NAME, name);
+                quoteCV.put(Contract.Quote.COLUMN_MARKETCAP, marketcap.toString());
+                quoteCV.put(Contract.Quote.COLUMN_DAYS_LOW, dayLow.toString());
+                quoteCV.put(Contract.Quote.COLUMN_DAYS_HIGH, dayHigh.toString());
+                quoteCV.put(Contract.Quote.COLUMN_YEARS_LOW, yearLow.toString());
+                quoteCV.put(Contract.Quote.COLUMN_YEARS_HIGH, yearHigh.toString());
+                quoteCV.put(Contract.Quote.COLUMN_QUARTERLY_ESTIMATE, quarterlyEstimate.toString());
+                quoteCV.put(Contract.Quote.COLUMN_YEARLY_ESTIMATE, yearlyEstimate.toString());
                 quoteCVs.add(quoteCV);
-
             }
-
             context.getContentResolver()
                     .bulkInsert(
                             Contract.Quote.URI,

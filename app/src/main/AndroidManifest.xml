@@ -60,7 +60,13 @@
 
         <activity
             android:name=".ui.OnClickActivity"
-            android:label="@string/title_activity_on_click"></activity>
+            android:label="@string/title_activity_on_click"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainActivity"/>
+        </activity>
     </application>
 
 </manifest>

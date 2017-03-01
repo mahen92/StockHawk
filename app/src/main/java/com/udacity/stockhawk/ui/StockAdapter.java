@@ -1,25 +1,18 @@
 package com.udacity.stockhawk.ui;
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -68,7 +61,7 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
     public void onBindViewHolder(StockViewHolder holder, int position) {
 
         cursor.moveToPosition(position);
-        //Log.v("Specialis Revelio",cursor.getString(Contract.Quote.POSITION_HISTORY));
+
 
         holder.symbol.setText(cursor.getString(Contract.Quote.POSITION_SYMBOL));
         holder.price.setText(dollarFormat.format(cursor.getFloat(Contract.Quote.POSITION_PRICE)));
@@ -135,9 +128,17 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
             cursor.moveToPosition(adapterPosition);
             int symbolColumn = cursor.getColumnIndex(Contract.Quote.COLUMN_SYMBOL);
             clickHandler.onClick(cursor.getString(symbolColumn));
-            Toast.makeText(context, "On CLick", Toast.LENGTH_LONG).show();
+
             Intent intent = new Intent(context, OnClickActivity.class);
             intent.putExtra("symbol_name", cursor.getString(Contract.Quote.POSITION_HISTORY));
+            intent.putExtra("marketcap", cursor.getString(Contract.Quote.POSITION_MARKETCAP));
+            intent.putExtra("days_low", cursor.getString(Contract.Quote.POSITION_DAYS_LOW));
+            intent.putExtra("days_high", cursor.getString(Contract.Quote.POSITION_DAYS_HIGH));
+            intent.putExtra("years_low", cursor.getString(Contract.Quote.POSITION_YEARS_LOW));
+            intent.putExtra("years_high", cursor.getString(Contract.Quote.POSITION_YEARS_HIGH));
+            intent.putExtra("quarterly_estimate", cursor.getString(Contract.Quote.POSITION_QUARTERLY_ESTIMATE));
+            intent.putExtra("yearly_estimate", cursor.getString(Contract.Quote.POSITION_YEARLY_ESTIMATE));
+            intent.putExtra("name", cursor.getString(Contract.Quote.POSITION_NAME));
             context.startActivity(intent);
         }
 

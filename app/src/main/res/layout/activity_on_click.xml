@@ -28,7 +28,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_activity_line_graph"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="56dp" />
 
         <FrameLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -54,28 +54,19 @@
             >
 
 
+            <android.support.v7.widget.CardView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                card_view:contentPadding="16dp"
+                card_view:cardElevation="2dp"
+                card_view:cardCornerRadius="5dp"
+                card_view:cardUseCompatPadding="true">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:layout_weight="1"/>
 
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/stock_name"
-                            android:layout_weight="1"/>
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -85,14 +76,14 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text=""
+                            android:text="@string/on_click_name"
                             android:layout_weight="1"/>
 
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/stocksymbol"
+                            android:id="@+id/name"
                             android:layout_weight="1"/>
                     </LinearLayout>
 
@@ -104,14 +95,14 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text=""
+                            android:text="@string/marketcap"
                             android:layout_weight="1"/>
 
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/currency"
+                            android:id="@+id/marketcap"
                             android:layout_weight="1"/>
                     </LinearLayout>
                     <LinearLayout
@@ -122,14 +113,14 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text=""
+                            android:text="@string/dayLow"
                             android:layout_weight="1"/>
 
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/last_trade_date"
+                            android:id="@+id/day_low"
                             android:layout_weight="1"/>
                     </LinearLayout>
                     <LinearLayout
@@ -140,14 +131,14 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text=""
+                            android:text="@string/dayHigh"
                             android:layout_weight="1"/>
 
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/daylow"
+                            android:id="@+id/day_high"
                             android:layout_weight="1"/>
                     </LinearLayout>
                     <LinearLayout
@@ -158,14 +149,14 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text=""
+                            android:text="@string/yearLow"
                             android:layout_weight="1"/>
 
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/dayhigh"
+                            android:id="@+id/year_low"
                             android:layout_weight="1"/>
                     </LinearLayout>
                     <LinearLayout
@@ -176,14 +167,14 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text=""
+                            android:text="@string/yearHigh"
                             android:layout_weight="1"/>
 
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/yearlow"
+                            android:id="@+id/year_high"
                             android:layout_weight="1"/>
                     </LinearLayout>
                     <LinearLayout
@@ -194,14 +185,14 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text=""
+                            android:text="@string/quarterlyEstimate"
                             android:layout_weight="1"/>
 
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/yearhigh"
+                            android:id="@+id/quarterly_estimate"
                             android:layout_weight="1"/>
                     </LinearLayout>
                     <LinearLayout
@@ -212,42 +203,18 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text=""
+                            android:text="@string/yearlyEstimate"
                             android:layout_weight="1"/>
 
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:id="@+id/earningsshare"
+                            android:id="@+id/yearly_estimate"
                             android:layout_weight="1"/>
                     </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:layout_weight="1"/>
-
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/marketcaptalization"
-                            android:layout_weight="1"/>
-                    </LinearLayout>
-
-
-
                 </LinearLayout>
-
-
-
+            </android.support.v7.widget.CardView>
         </FrameLayout>
     </LinearLayout>
-
 </android.support.design.widget.CoordinatorLayout>
