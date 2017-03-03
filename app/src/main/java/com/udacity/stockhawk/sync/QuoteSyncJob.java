@@ -57,29 +57,32 @@ public final class QuoteSyncJob {
         try {
             Set<String> stockPref = PrefUtils.getStocks(context);
             Set<String> stockCopy = new HashSet<>();
-            if(cursor!=null) {
-                if(cursor.getCount()!=0) {
-                    for (int i = 0; i <= cursor.getCount() - 1; i++) {
-                        cursor.moveToPosition(i);
-                        stockPref.add(cursor.getString(Contract.Quote.POSITION_SYMBOL));
-                    }
-                }
 
-            }
             ArrayList<String> arrList=new ArrayList<>();
             for(String sym:stockPref)
             {
                 arrList.add(sym);
             }
+
             for(String sym:arrList)
             {
-                Stock testStock=YahooFinance.get(sym);
-                if(testStock.getName()==null)
+                try {
+                    Stock testStock = YahooFinance.get(sym);
+                    if (testStock.getName() == null) {
+                        stockPref.remove(sym);
+                        Intent intent = new Intent();
+                        intent.setAction("com.udacity.stockhawk.ui.MainActivity.STOCK_NOT_FOUND");
+                        context.sendBroadcast(intent);
+                        continue;
+                    }
+                }
+                catch(Exception e)
                 {
                     stockPref.remove(sym);
                     Intent intent = new Intent();
                     intent.setAction("com.udacity.stockhawk.ui.MainActivity.STOCK_NOT_FOUND");
                     context.sendBroadcast(intent);
+                    continue;
                 }
             }
             stockCopy.addAll(stockPref);
@@ -219,3 +222,4 @@ public final class QuoteSyncJob {
 
 
 }
+

@@ -7,7 +7,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="6ab5e8857fee0927e67bb3dc0698c87002e35cc9">
+        sha1="587432f22c8f633c5943e0b48389b4043d55a0bb">
         <dex dex="C:\Udacity Stock\StockHawk-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_bbe81a85f39a3b6e850a145b5334dd66f1a6d67f\classes.dex" />
     </item>
     <item
@@ -16,7 +16,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="ba6c19bc7a72ec31f2b2c41b61df07487688aa8b">
+        sha1="57016ec3fce73842cc944d8da3cc5fc4e1eae3d6">
         <dex dex="C:\Udacity Stock\StockHawk-master\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_b1b5e8897108ca772af9cab08cb2b1a838925708\classes.dex" />
     </item>
     <item
